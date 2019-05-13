@@ -1,5 +1,5 @@
-# Dica AFEC - AD
+AFEC feito no 1f2b2a9b06c7a55f1595bc29efaee6a612eb6b9f, depois tive que refazer tudo ai nao deu tempo de fazer denovo 
 
-O pino 28 do Header J400 (Camera Interface, este header está embaixo do conector de Ethernet) da placa SAME70, no caso o pino PD30, pode ser usado no AFEC (AFEC 0 Canal 0).
+resto das funcionalidades do C feitos no d2e11c3d87685fdde860a9a71ad8149847d22492
 
-Dica: o pino 28 fica ao lado do texto na placa "AD6" conforme figura.
+
