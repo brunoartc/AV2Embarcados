@@ -93,6 +93,9 @@
 #include "conf_uart_serial.h"
 #include "tfont.h"
 #include "digital521.h"
+#include "soneca.h"
+#include "termometro.h"
+#include "ar.h"
 
 /************************************************************************/
 /* LCD + TOUCH                                                          */
@@ -100,11 +103,29 @@
 #define MAX_ENTRIES        3
 
 struct ili9488_opt_t g_ili9488_display_opt;
-const uint32_t BUTTON_W = 120;
-const uint32_t BUTTON_H = 150;
-const uint32_t BUTTON_BORDER = 2;
-const uint32_t BUTTON_X = ILI9488_LCD_WIDTH/2;
-const uint32_t BUTTON_Y = ILI9488_LCD_HEIGHT/2;
+
+
+
+volatile uint pot = 0;
+
+
+//BUTTON
+
+
+#define EBUT1_PIO PIOD //start EXT 9 PD28
+
+#define EBUT1_PIO_ID 16
+
+#define EBUT1_PIO_IDX 28
+
+#define EBUT1_PIO_IDX_MASK (1u << EBUT1_PIO_IDX)
+
+void but_callback(void)
+{
+	pot++;
+	pot%=100;
+}
+
 	
 /************************************************************************/
 /* RTOS                                                                  */
@@ -170,6 +191,21 @@ extern void vApplicationMallocFailedHook(void)
 /************************************************************************/
 /* init                                                                 */
 /************************************************************************/
+
+void io_init(void)
+{
+	pmc_enable_periph_clk(EBUT1_PIO_ID);
+	pio_configure(EBUT1_PIO, PIO_INPUT,EBUT1_PIO_IDX_MASK, PIO_PULLUP);
+	pio_handler_set(EBUT1_PIO,
+	EBUT1_PIO_ID,
+	EBUT1_PIO_IDX_MASK,
+	PIO_IT_FALL_EDGE,
+	but_callback);
+	pio_enable_interrupt(EBUT1_PIO, EBUT1_PIO_IDX_MASK);
+	NVIC_EnableIRQ(EBUT1_PIO_ID);
+	NVIC_SetPriority(EBUT1_PIO_ID, 4); // Prioridade 4
+}
+
 
 
 static void configure_lcd(void){
@@ -285,21 +321,6 @@ void draw_screen(void) {
 	ili9488_draw_filled_rectangle(0, 0, ILI9488_LCD_WIDTH-1, ILI9488_LCD_HEIGHT-1);
 }
 
-void draw_button(uint32_t clicked) {
-	static uint32_t last_state = 255; // undefined
-	if(clicked == last_state) return;
-	
-	ili9488_set_foreground_color(COLOR_CONVERT(COLOR_BLACK));
-	ili9488_draw_filled_rectangle(BUTTON_X-BUTTON_W/2, BUTTON_Y-BUTTON_H/2, BUTTON_X+BUTTON_W/2, BUTTON_Y+BUTTON_H/2);
-	if(clicked) {
-		ili9488_set_foreground_color(COLOR_CONVERT(COLOR_TOMATO));
-		ili9488_draw_filled_rectangle(BUTTON_X-BUTTON_W/2+BUTTON_BORDER, BUTTON_Y+BUTTON_BORDER, BUTTON_X+BUTTON_W/2-BUTTON_BORDER, BUTTON_Y+BUTTON_H/2-BUTTON_BORDER);
-	} else {
-		ili9488_set_foreground_color(COLOR_CONVERT(COLOR_GREEN));
-		ili9488_draw_filled_rectangle(BUTTON_X-BUTTON_W/2+BUTTON_BORDER, BUTTON_Y-BUTTON_H/2+BUTTON_BORDER, BUTTON_X+BUTTON_W/2-BUTTON_BORDER, BUTTON_Y-BUTTON_BORDER);
-	}
-	last_state = clicked;
-}
 
 uint32_t convert_axis_system_x(uint32_t touch_y) {
 	// entrada: 4096 - 0 (sistema de coordenadas atual)
@@ -314,13 +335,7 @@ uint32_t convert_axis_system_y(uint32_t touch_x) {
 }
 
 void update_screen(uint32_t tx, uint32_t ty) {
-	if(tx >= BUTTON_X-BUTTON_W/2 && tx <= BUTTON_X + BUTTON_W/2) {
-		if(ty >= BUTTON_Y-BUTTON_H/2 && ty <= BUTTON_Y) {
-			draw_button(1);
-		} else if(ty > BUTTON_Y && ty < BUTTON_Y + BUTTON_H/2) {
-			draw_button(0);
-		}
-	}
+
 }
 
 void font_draw_text(tFont *font, const char *text, int x, int y, int spacing) {
@@ -402,18 +417,28 @@ void task_lcd(void){
  
   
   draw_screen();
-  draw_button(0);
+  
   
    // Escreve HH:MM no LCD
-   font_draw_text(&digital52, "HH:MM", 0, 0, 1);
+   font_draw_text(&digital52, "5:35", 52*1, 52*3, 1);
   
   touchData touch;
     
   while (true) {  
-     if (xQueueReceive( xQueueTouch, &(touch), ( TickType_t )  500 / portTICK_PERIOD_MS)) {
-       update_screen(touch.x, touch.y);
-       printf("x:%d y:%d\n", touch.x, touch.y);
-     }     
+	  char tempo[12];
+
+	  sprintf(tempo, "%d", 26);   
+	  font_draw_text(&digital52, tempo,0 ,52, 1); // + 52 sempre -> \n
+	  
+	  ili9488_draw_pixmap(52*4, 52*3, 69, 69, soneca.data);
+	  ili9488_draw_pixmap(52*1, 52*5, termometro.width, termometro.height, termometro.data);
+	  sprintf(tempo, "%d", 10);
+	  font_draw_text(&digital52, tempo,52*1 ,52*7, 1); // + 52 sempre -> \n
+	  
+	  ili9488_draw_pixmap(52*3, 52*5, ar.width, ar.height, ar.data);
+	  sprintf(tempo, "%d", pot);
+	  font_draw_text(&digital52, tempo,52*3 ,52*7, 1); // + 52 sempre -> \n
+	  
   }	 
 }
 
@@ -433,6 +458,7 @@ int main(void)
 
 	sysclk_init(); /* Initialize system clocks */
 	board_init();  /* Initialize board */
+	io_init();
 	
 	/* Initialize stdio on USART */
 	stdio_serial_init(USART_SERIAL_EXAMPLE, &usart_serial_options);
