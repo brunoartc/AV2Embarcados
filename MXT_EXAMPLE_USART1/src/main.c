@@ -1,88 +1,88 @@
 /**
-* \file
-*
-* \brief Example of usage of the maXTouch component with USART
-*
-* This example shows how to receive touch data from a maXTouch device
-* using the maXTouch component, and display them in a terminal window by using
-* the USART driver.
-*
-* Copyright (c) 2014-2018 Microchip Technology Inc. and its subsidiaries.
-*
-* \asf_license_start
-*
-* \page License
-*
-* Subject to your compliance with these terms, you may use Microchip
-* software and any derivatives exclusively with Microchip products.
-* It is your responsibility to comply with third party license terms applicable
-* to your use of third party software (including open source software) that
-* may accompany Microchip software.
-*
-* THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES,
-* WHETHER EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE,
-* INCLUDING ANY IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY,
-* AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE
-* LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL
-* LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND WHATSOEVER RELATED TO THE
-* SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS BEEN ADVISED OF THE
-* POSSIBILITY OR THE DAMAGES ARE FORESEEABLE.  TO THE FULLEST EXTENT
-* ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN ANY WAY
-* RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
-* THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
-*
-* \asf_license_stop
-*
-*/
+ * \file
+ *
+ * \brief Example of usage of the maXTouch component with USART
+ *
+ * This example shows how to receive touch data from a maXTouch device
+ * using the maXTouch component, and display them in a terminal window by using
+ * the USART driver.
+ *
+ * Copyright (c) 2014-2018 Microchip Technology Inc. and its subsidiaries.
+ *
+ * \asf_license_start
+ *
+ * \page License
+ *
+ * Subject to your compliance with these terms, you may use Microchip
+ * software and any derivatives exclusively with Microchip products.
+ * It is your responsibility to comply with third party license terms applicable
+ * to your use of third party software (including open source software) that
+ * may accompany Microchip software.
+ *
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES,
+ * WHETHER EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE,
+ * INCLUDING ANY IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY,
+ * AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT WILL MICROCHIP BE
+ * LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL
+ * LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND WHATSOEVER RELATED TO THE
+ * SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS BEEN ADVISED OF THE
+ * POSSIBILITY OR THE DAMAGES ARE FORESEEABLE.  TO THE FULLEST EXTENT
+ * ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN ANY WAY
+ * RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
+ * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
+ *
+ * \asf_license_stop
+ *
+ */
 
 /**
-* \mainpage
-*
-* \section intro Introduction
-* This simple example reads data from the maXTouch device and sends it over
-* USART as ASCII formatted text.
-*
-* \section files Main files:
-* - example_usart.c: maXTouch component USART example file
-* - conf_mxt.h: configuration of the maXTouch component
-* - conf_board.h: configuration of board
-* - conf_clock.h: configuration of system clock
-* - conf_example.h: configuration of example
-* - conf_sleepmgr.h: configuration of sleep manager
-* - conf_twim.h: configuration of TWI driver
-* - conf_usart_serial.h: configuration of USART driver
-*
-* \section apiinfo maXTouch low level component API
-* The maXTouch component API can be found \ref mxt_group "here".
-*
-* \section deviceinfo Device Info
-* All UC3 and Xmega devices with a TWI module can be used with this component
-*
-* \section exampledescription Description of the example
-* This example will read data from the connected maXTouch explained board
-* over TWI. This data is then processed and sent over a USART data line
-* to the board controller. The board controller will create a USB CDC class
-* object on the host computer and repeat the incoming USART data from the
-* main controller to the host. On the host this object should appear as a
-* serial port object (COMx on windows, /dev/ttyxxx on your chosen Linux flavour).
-*
-* Connect a terminal application to the serial port object with the settings
-* Baud: 57600
-* Data bits: 8-bit
-* Stop bits: 1 bit
-* Parity: None
-*
-* \section compinfo Compilation Info
-* This software was written for the GNU GCC and IAR for AVR.
-* Other compilers may or may not work.
-*
-* \section contactinfo Contact Information
-* For further information, visit
-* <A href="http://www.atmel.com/">Atmel</A>.\n
-*/
+ * \mainpage
+ *
+ * \section intro Introduction
+ * This simple example reads data from the maXTouch device and sends it over
+ * USART as ASCII formatted text.
+ *
+ * \section files Main files:
+ * - example_usart.c: maXTouch component USART example file
+ * - conf_mxt.h: configuration of the maXTouch component
+ * - conf_board.h: configuration of board
+ * - conf_clock.h: configuration of system clock
+ * - conf_example.h: configuration of example
+ * - conf_sleepmgr.h: configuration of sleep manager
+ * - conf_twim.h: configuration of TWI driver
+ * - conf_usart_serial.h: configuration of USART driver
+ *
+ * \section apiinfo maXTouch low level component API
+ * The maXTouch component API can be found \ref mxt_group "here".
+ *
+ * \section deviceinfo Device Info
+ * All UC3 and Xmega devices with a TWI module can be used with this component
+ *
+ * \section exampledescription Description of the example
+ * This example will read data from the connected maXTouch explained board
+ * over TWI. This data is then processed and sent over a USART data line
+ * to the board controller. The board controller will create a USB CDC class
+ * object on the host computer and repeat the incoming USART data from the
+ * main controller to the host. On the host this object should appear as a
+ * serial port object (COMx on windows, /dev/ttyxxx on your chosen Linux flavour).
+ *
+ * Connect a terminal application to the serial port object with the settings
+ * Baud: 57600
+ * Data bits: 8-bit
+ * Stop bits: 1 bit
+ * Parity: None
+ *
+ * \section compinfo Compilation Info
+ * This software was written for the GNU GCC and IAR for AVR.
+ * Other compilers may or may not work.
+ *
+ * \section contactinfo Contact Information
+ * For further information, visit
+ * <A href="http://www.atmel.com/">Atmel</A>.\n
+ */
 /*
-* Support and FAQ: visit <a href="https://www.microchip.com/support/">Microchip Support</a>
-*/
+ * Support and FAQ: visit <a href="https://www.microchip.com/support/">Microchip Support</a>
+ */
 
 #include <asf.h>
 #include <stdlib.h>
@@ -98,126 +98,57 @@
 #define MAX_ENTRIES        3
 
 struct ili9488_opt_t g_ili9488_display_opt;
-
-volatile Bool g1_is_conversion_done = false;
-volatile uint32_t pot_ul_value;
-
+const uint32_t BUTTON_W = 120;
+const uint32_t BUTTON_H = 150;
+const uint32_t BUTTON_BORDER = 2;
+const uint32_t BUTTON_X = ILI9488_LCD_WIDTH/2;
+const uint32_t BUTTON_Y = ILI9488_LCD_HEIGHT/2;
+	
 /************************************************************************/
 /* RTOS                                                                  */
 /************************************************************************/
 #define TASK_MXT_STACK_SIZE            (2*1024/sizeof(portSTACK_TYPE))
-#define TASK_MXT_STACK_PRIORITY        (tskIDLE_PRIORITY)
+#define TASK_MXT_STACK_PRIORITY        (tskIDLE_PRIORITY)  
 
 #define TASK_LCD_STACK_SIZE            (2*1024/sizeof(portSTACK_TYPE))
 #define TASK_LCD_STACK_PRIORITY        (tskIDLE_PRIORITY)
 
 typedef struct {
-	uint x;
-	uint y;
+  uint x;
+  uint y;
 } touchData;
 
 QueueHandle_t xQueueTouch;
-
-/************************************************************************/
-/* MAGIC                                                                */
-/************************************************************************/
-
-#define APERTADO '1'
-#define LIBERADO '0'
-
-typedef void (*p_handler) (uint32_t, uint32_t);
-
-
-/************************************************************************/
-/* AFEC                                                                 */
-/************************************************************************/
-
-
-#define AFEC_CHANNEL_POT_SENSOR 8
-
-/************************************************************************/
-/* botoes                                                                  */
-/************************************************************************/
-
-volatile Bool but_status;
-
-typedef struct {
-	uint32_t PIO_NAME;
-	uint32_t PIO_ID;
-	uint32_t PIO_IDX;
-	uint32_t PIO_MASK;
-	volatile Bool but_flag;
-	char BUT_NUM;
-} botao;
-
-botao BUT1 = {.PIO_NAME = PIOC, .PIO_ID = ID_PIOC, .PIO_IDX = 17u, .PIO_MASK = (1u << 17u), .BUT_NUM = 'a'};
-botao BUT2 = {.PIO_NAME = PIOC, .PIO_ID = ID_PIOC, .PIO_IDX = 30u, .PIO_MASK = (1u << 30u), .BUT_NUM = 'b'};
-botao BUT3 = {.PIO_NAME = PIOA, .PIO_ID = ID_PIOA, .PIO_IDX = 3u, .PIO_MASK = (1u << 3u), .BUT_NUM = 'c'};
-
-/************************************************************************/
-/* callbacks                                                            */
-/************************************************************************/
-
-
-void but1_callback(void)
-{
-	BUT1.but_flag = true;
-	if(!pio_get(BUT1.PIO_NAME, PIO_INPUT, BUT1.PIO_MASK))
-	but_status = APERTADO;
-	else
-	but_status = LIBERADO;
-}
-
-void but2_callback(void)
-{
-	BUT2.but_flag = true;
-	if(!pio_get(BUT2.PIO_NAME, PIO_INPUT, BUT2.PIO_MASK))
-	but_status = APERTADO;
-	else
-	but_status = LIBERADO;
-}
-
-void but3_callback(void)
-{
-	BUT3.but_flag = true;
-	if(!pio_get(BUT3.PIO_NAME, PIO_INPUT, BUT3.PIO_MASK))
-	but_status = APERTADO;
-	else
-	but_status = LIBERADO;
-}
-
-
-
 
 /************************************************************************/
 /* RTOS hooks                                                           */
 /************************************************************************/
 
 /**
-* \brief Called if stack overflow during execution
-*/
+ * \brief Called if stack overflow during execution
+ */
 extern void vApplicationStackOverflowHook(xTaskHandle *pxTask,
-signed char *pcTaskName)
+		signed char *pcTaskName)
 {
 	printf("stack overflow %x %s\r\n", pxTask, (portCHAR *)pcTaskName);
 	/* If the parameters have been corrupted then inspect pxCurrentTCB to
-	* identify which task has overflowed its stack.
-	*/
+	 * identify which task has overflowed its stack.
+	 */
 	for (;;) {
 	}
 }
 
 /**
-* \brief This function is called by FreeRTOS idle task
-*/
+ * \brief This function is called by FreeRTOS idle task
+ */
 extern void vApplicationIdleHook(void)
 {
 	pmc_sleep(SAM_PM_SMODE_SLEEP_WFI);
 }
 
 /**
-* \brief This function is called by FreeRTOS each tick
-*/
+ * \brief This function is called by FreeRTOS each tick
+ */
 extern void vApplicationTickHook(void)
 {
 }
@@ -237,39 +168,7 @@ extern void vApplicationMallocFailedHook(void)
 /************************************************************************/
 /* init                                                                 */
 /************************************************************************/
-void iniciabots(botao BOT, p_handler *funcao){
-	
-	pio_configure(BOT.PIO_NAME, PIO_INPUT, BOT.PIO_MASK, PIO_PULLUP|PIO_DEBOUNCE);
-	pio_set_debounce_filter(BOT.PIO_NAME, BOT.PIO_MASK, 60);
 
-	// Configura interrupção no pino referente ao botao e associa
-	// função de callback caso uma interrupção for gerada
-	// a função de callback é a: but_callback()
-	pio_handler_set(BOT.PIO_NAME,
-	BOT.PIO_ID,
-	BOT.PIO_MASK,
-	PIO_IT_FALL_EDGE,
-	funcao);
-
-	// Ativa interrupção
-	pio_enable_interrupt(BOT.PIO_NAME, BOT.PIO_MASK);
-
-	// Configura NVIC para receber interrupcoes do PIO do botao
-	// com prioridade 4 (quanto mais próximo de 0 maior)
-	NVIC_EnableIRQ(BOT.PIO_ID);
-	NVIC_SetPriority(BOT.PIO_ID, 4); // Prioridade 4
-
-}
-
-
-void io_init(void)
-{
-	
-	iniciabots(BUT1, but1_callback);
-	iniciabots(BUT2, but2_callback);
-	iniciabots(BUT3, but3_callback);
-
-}
 
 static void configure_lcd(void){
 	/* Initialize display parameter */
@@ -283,13 +182,13 @@ static void configure_lcd(void){
 }
 
 /**
-* \brief Set maXTouch configuration
-*
-* This function writes a set of predefined, optimal maXTouch configuration data
-* to the maXTouch Xplained Pro.
-*
-* \param device Pointer to mxt_device struct
-*/
+ * \brief Set maXTouch configuration
+ *
+ * This function writes a set of predefined, optimal maXTouch configuration data
+ * to the maXTouch Xplained Pro.
+ *
+ * \param device Pointer to mxt_device struct
+ */
 static void mxt_init(struct mxt_device *device)
 {
 	enum status_code status;
@@ -336,43 +235,43 @@ static void mxt_init(struct mxt_device *device)
 
 	/* Initialize the maXTouch device */
 	status = mxt_init_device(device, MAXTOUCH_TWI_INTERFACE,
-	MAXTOUCH_TWI_ADDRESS, MAXTOUCH_XPRO_CHG_PIO);
+			MAXTOUCH_TWI_ADDRESS, MAXTOUCH_XPRO_CHG_PIO);
 	Assert(status == STATUS_OK);
 
 	/* Issue soft reset of maXTouch device by writing a non-zero value to
-	* the reset register */
+	 * the reset register */
 	mxt_write_config_reg(device, mxt_get_object_address(device,
-	MXT_GEN_COMMANDPROCESSOR_T6, 0)
-	+ MXT_GEN_COMMANDPROCESSOR_RESET, 0x01);
+			MXT_GEN_COMMANDPROCESSOR_T6, 0)
+			+ MXT_GEN_COMMANDPROCESSOR_RESET, 0x01);
 
 	/* Wait for the reset of the device to complete */
 	delay_ms(MXT_RESET_TIME);
 
 	/* Write data to configuration registers in T7 configuration object */
 	mxt_write_config_reg(device, mxt_get_object_address(device,
-	MXT_GEN_POWERCONFIG_T7, 0) + 0, 0x20);
+			MXT_GEN_POWERCONFIG_T7, 0) + 0, 0x20);
 	mxt_write_config_reg(device, mxt_get_object_address(device,
-	MXT_GEN_POWERCONFIG_T7, 0) + 1, 0x10);
+			MXT_GEN_POWERCONFIG_T7, 0) + 1, 0x10);
 	mxt_write_config_reg(device, mxt_get_object_address(device,
-	MXT_GEN_POWERCONFIG_T7, 0) + 2, 0x4b);
+			MXT_GEN_POWERCONFIG_T7, 0) + 2, 0x4b);
 	mxt_write_config_reg(device, mxt_get_object_address(device,
-	MXT_GEN_POWERCONFIG_T7, 0) + 3, 0x84);
+			MXT_GEN_POWERCONFIG_T7, 0) + 3, 0x84);
 
 	/* Write predefined configuration data to configuration objects */
 	mxt_write_config_object(device, mxt_get_object_address(device,
-	MXT_GEN_ACQUISITIONCONFIG_T8, 0), &t8_object);
+			MXT_GEN_ACQUISITIONCONFIG_T8, 0), &t8_object);
 	mxt_write_config_object(device, mxt_get_object_address(device,
-	MXT_TOUCH_MULTITOUCHSCREEN_T9, 0), &t9_object);
+			MXT_TOUCH_MULTITOUCHSCREEN_T9, 0), &t9_object);
 	mxt_write_config_object(device, mxt_get_object_address(device,
-	MXT_SPT_CTE_CONFIGURATION_T46, 0), &t46_object);
+			MXT_SPT_CTE_CONFIGURATION_T46, 0), &t46_object);
 	mxt_write_config_object(device, mxt_get_object_address(device,
-	MXT_PROCI_SHIELDLESS_T56, 0), &t56_object);
+			MXT_PROCI_SHIELDLESS_T56, 0), &t56_object);
 
 	/* Issue recalibration command to maXTouch device by writing a non-zero
-	* value to the calibrate register */
+	 * value to the calibrate register */
 	mxt_write_config_reg(device, mxt_get_object_address(device,
-	MXT_GEN_COMMANDPROCESSOR_T6, 0)
-	+ MXT_GEN_COMMANDPROCESSOR_CALIBRATE, 0x01);
+			MXT_GEN_COMMANDPROCESSOR_T6, 0)
+			+ MXT_GEN_COMMANDPROCESSOR_CALIBRATE, 0x01);
 }
 
 /************************************************************************/
@@ -382,6 +281,22 @@ static void mxt_init(struct mxt_device *device)
 void draw_screen(void) {
 	ili9488_set_foreground_color(COLOR_CONVERT(COLOR_WHITE));
 	ili9488_draw_filled_rectangle(0, 0, ILI9488_LCD_WIDTH-1, ILI9488_LCD_HEIGHT-1);
+}
+
+void draw_button(uint32_t clicked) {
+	static uint32_t last_state = 255; // undefined
+	if(clicked == last_state) return;
+	
+	ili9488_set_foreground_color(COLOR_CONVERT(COLOR_BLACK));
+	ili9488_draw_filled_rectangle(BUTTON_X-BUTTON_W/2, BUTTON_Y-BUTTON_H/2, BUTTON_X+BUTTON_W/2, BUTTON_Y+BUTTON_H/2);
+	if(clicked) {
+		ili9488_set_foreground_color(COLOR_CONVERT(COLOR_TOMATO));
+		ili9488_draw_filled_rectangle(BUTTON_X-BUTTON_W/2+BUTTON_BORDER, BUTTON_Y+BUTTON_BORDER, BUTTON_X+BUTTON_W/2-BUTTON_BORDER, BUTTON_Y+BUTTON_H/2-BUTTON_BORDER);
+	} else {
+		ili9488_set_foreground_color(COLOR_CONVERT(COLOR_GREEN));
+		ili9488_draw_filled_rectangle(BUTTON_X-BUTTON_W/2+BUTTON_BORDER, BUTTON_Y-BUTTON_H/2+BUTTON_BORDER, BUTTON_X+BUTTON_W/2-BUTTON_BORDER, BUTTON_Y-BUTTON_BORDER);
+	}
+	last_state = clicked;
 }
 
 uint32_t convert_axis_system_x(uint32_t touch_y) {
@@ -397,7 +312,13 @@ uint32_t convert_axis_system_y(uint32_t touch_x) {
 }
 
 void update_screen(uint32_t tx, uint32_t ty) {
-	//TODO
+	if(tx >= BUTTON_X-BUTTON_W/2 && tx <= BUTTON_X + BUTTON_W/2) {
+		if(ty >= BUTTON_Y-BUTTON_H/2 && ty <= BUTTON_Y) {
+			draw_button(1);
+		} else if(ty > BUTTON_Y && ty < BUTTON_Y + BUTTON_H/2) {
+			draw_button(0);
+		}
+	}
 }
 
 void mxt_handler(struct mxt_device *device, uint *x, uint *y)
@@ -407,12 +328,12 @@ void mxt_handler(struct mxt_device *device, uint *x, uint *y)
 
 	/* Temporary touch event data struct */
 	struct mxt_touch_event touch_event;
-	
-	/* first touch only */
-	uint first = 0;
+  
+  /* first touch only */
+  uint first = 0;
 
 	/* Collect touch events and put the data in a string,
-	* maximum 2 events at the time */
+	 * maximum 2 events at the time */
 	do {
 
 		/* Read next next touch event in the queue, discard if read fails */
@@ -420,19 +341,19 @@ void mxt_handler(struct mxt_device *device, uint *x, uint *y)
 			continue;
 		}
 		
-		/************************************************************************/
-		/* Envia dados via fila RTOS                                            */
-		/************************************************************************/
-		if(first == 0 ){
-			*x = convert_axis_system_x(touch_event.y);
-			*y = convert_axis_system_y(touch_event.x);
-			first = 1;
-		}
-		
+    /************************************************************************/
+    /* Envia dados via fila RTOS                                            */
+    /************************************************************************/
+    if(first == 0 ){
+      *x = convert_axis_system_x(touch_event.y);
+      *y = convert_axis_system_y(touch_event.x);
+      first = 1;
+    }
+    
 		i++;
 
 		/* Check if there is still messages in the queue and
-		* if we have reached the maximum numbers of events */
+		 * if we have reached the maximum numbers of events */
 	} while ((mxt_is_message_pending(device)) & (i < MAX_ENTRIES));
 }
 
@@ -441,48 +362,37 @@ void mxt_handler(struct mxt_device *device, uint *x, uint *y)
 /************************************************************************/
 
 void task_mxt(void){
-	
-	struct mxt_device device; /* Device data container */
-	mxt_init(&device);       	/* Initialize the mXT touch device */
-	touchData touch;          /* touch queue data type*/
-	
-	while (true) {
-		/* Check for any pending messages and run message handler if any
-		* message is found in the queue */
-		if (mxt_is_message_pending(&device)) {
-			mxt_handler(&device, &touch.x, &touch.y);
-			xQueueSend( xQueueTouch, &touch, 0);           /* send mesage to queue */
-		}
-		vTaskDelay(100);
+  
+  	struct mxt_device device; /* Device data container */
+  	mxt_init(&device);       	/* Initialize the mXT touch device */
+    touchData touch;          /* touch queue data type*/
+    
+  	while (true) {  
+		  /* Check for any pending messages and run message handler if any
+		   * message is found in the queue */
+		  if (mxt_is_message_pending(&device)) {
+		  	mxt_handler(&device, &touch.x, &touch.y);
+        xQueueSend( xQueueTouch, &touch, 0);           /* send mesage to queue */
+      }
+     vTaskDelay(100);
 	}
 }
 
 void task_lcd(void){
-	xQueueTouch = xQueueCreate( 10, sizeof( touchData ) );
+  xQueueTouch = xQueueCreate( 10, sizeof( touchData ) );
 	configure_lcd();
-	
-	draw_screen();
-	
-	touchData touch;
-	
-	while (true) {
-		if (xQueueReceive( xQueueTouch, &(touch), ( TickType_t )  500 / portTICK_PERIOD_MS)) {
-			update_screen(touch.x, touch.y);
-			printf("x:%d y:%d\n", touch.x, touch.y);
-		}
-	}
+  
+  draw_screen();
+  draw_button(0);
+  touchData touch;
+    
+  while (true) {  
+     if (xQueueReceive( xQueueTouch, &(touch), ( TickType_t )  500 / portTICK_PERIOD_MS)) {
+       update_screen(touch.x, touch.y);
+       printf("x:%d y:%d\n", touch.x, touch.y);
+     }     
+  }	 
 }
-
-
-static void AFEC_pot_callback(void)
-{
-	pot_ul_value = afec_channel_get_value(AFEC0, AFEC_CHANNEL_POT_SENSOR);
-	g1_is_conversion_done = true;
-}
-
-
-
-
 
 /************************************************************************/
 /* main                                                                 */
@@ -500,27 +410,26 @@ int main(void)
 
 	sysclk_init(); /* Initialize system clocks */
 	board_init();  /* Initialize board */
-	io_init();
 	
 	/* Initialize stdio on USART */
 	stdio_serial_init(USART_SERIAL_EXAMPLE, &usart_serial_options);
-	
-	/* Create task to handler touch */
-	if (xTaskCreate(task_mxt, "mxt", TASK_MXT_STACK_SIZE, NULL, TASK_MXT_STACK_PRIORITY, NULL) != pdPASS) {
-		printf("Failed to create test led task\r\n");
-	}
-	
-	/* Create task to handler LCD */
-	if (xTaskCreate(task_lcd, "lcd", TASK_LCD_STACK_SIZE, NULL, TASK_LCD_STACK_PRIORITY, NULL) != pdPASS) {
-		printf("Failed to create test led task\r\n");
-	}
+		
+  /* Create task to handler touch */
+  if (xTaskCreate(task_mxt, "mxt", TASK_MXT_STACK_SIZE, NULL, TASK_MXT_STACK_PRIORITY, NULL) != pdPASS) {
+    printf("Failed to create test led task\r\n");
+  }
+  
+  /* Create task to handler LCD */
+  if (xTaskCreate(task_lcd, "lcd", TASK_LCD_STACK_SIZE, NULL, TASK_LCD_STACK_PRIORITY, NULL) != pdPASS) {
+    printf("Failed to create test led task\r\n");
+  }
 
-	/* Start the scheduler. */
-	vTaskStartScheduler();
+  /* Start the scheduler. */
+  vTaskStartScheduler();
 
-	while(1){
+  while(1){
 
-	}
+  }
 
 
 	return 0;
